@@ -82,13 +82,13 @@ def get_config(config_string="full,multimodal"):
             grad_accumulation_steps=None,  # if you are using grad accumulation, you need to adjust max_steps accordingly
         ),
         val_kwargs=dict(
-            val_shuffle_buffer_size=1000,
-            num_val_batches=16,
+            val_shuffle_buffer_size=100,
+            num_val_batches=2,
         ),
         viz_kwargs=dict(
-            eval_batch_size=128,
-            trajs_for_metrics=100,
-            trajs_for_viz=8,
+            eval_batch_size=16,
+            trajs_for_metrics=5,
+            trajs_for_viz=4,
             samples_per_state=8,
         ),
     )
