@@ -546,8 +546,9 @@ class WandBFigure:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.canvas.draw()
-        out_image = np.frombuffer(self.canvas.tostring_rgb(), dtype="uint8")
-        self.image = out_image.reshape(self.fig.canvas.get_width_height()[::-1] + (3,))
+        # Use buffer_rgba() for newer matplotlib versions (tostring_rgb was removed)
+        buf = np.asarray(self.canvas.buffer_rgba(), dtype="uint8")
+        self.image = buf.reshape(self.fig.canvas.get_width_height()[::-1] + (4,))[:, :, :3]
         plt.close(self.fig)
 
 

@@ -42,7 +42,7 @@ except ImportError:
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("name", "experiment", "Experiment name.")
+flags.DEFINE_string("name", "small", "Experiment name.")
 flags.DEFINE_bool("debug", False, "Debug config (no wandb logging)")
 
 default_config_file = os.path.join(
