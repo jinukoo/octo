@@ -39,6 +39,29 @@ def bridge_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     return trajectory
 
 
+def simpler_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+    """Transform function for the simpler dataset (overlaps with Bridge V2)."""
+    # Binarize gripper actions: keep first 6 dims, binarize last dim
+    trajectory["action"] = tf.concat(
+        [
+            trajectory["action"][:, :6],
+            binarize_gripper_actions(trajectory["action"][:, -1])[:, None],
+        ],
+        axis=1,
+    )
+
+    # Move language_instruction from observation to top-level
+    trajectory["language_instruction"] = trajectory["observation"][
+        "language_instruction"
+    ]
+
+    # Create dummy proprio since the dataset has no proprioceptive data
+    traj_len = tf.shape(trajectory["action"])[0]
+    trajectory["observation"]["proprio"] = tf.zeros((traj_len, 1), dtype=tf.float32)
+
+    return trajectory
+
+
 def rt1_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     # make gripper action absolute action, +1 = open, 0 = close
     gripper_action = trajectory["action"]["gripper_closedness_action"][:, 0]
@@ -1027,4 +1050,5 @@ OXE_STANDARDIZATION_TRANSFORMS = {
     "roboset": roboset_dataset_transform,
     "rh20t": rh20t_dataset_transform,
     "mujoco_manip": mujoco_manip_dataset_transform,
+    "simpler": simpler_dataset_transform,
 }

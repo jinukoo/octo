@@ -6,6 +6,7 @@ optax == 0.1.5
 tensorflow_probability == 0.23.0
 tensorflow == 2.15.0
 jax == 0.4.20
+nvidia-cudnn-cu11 == 8.6.0.163  # Required for JAX 0.4.20 GPU support (cuDNN 8.6)
 distrax == 0.1.5
 flax == 0.7.5
 ml_collections >= 0.1.0

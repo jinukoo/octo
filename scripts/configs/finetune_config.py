@@ -16,18 +16,17 @@ def get_config(config_string="full,multimodal"):
     # and second image key should be the wrist view (None if not used)
 
     FINETUNING_KWARGS = {
-        "name": "bridge_dataset",
-        "data_dir": "./tests/debug_dataset",
-        "image_obs_keys": {"primary": "image_0", "wrist": None},
+        "name": "simpler",
+        "data_dir": "./data",
+        "image_obs_keys": {"primary": "image", "wrist": None},
         "proprio_obs_key": "proprio",
         "language_key": "language_instruction",
         "action_proprio_normalization_type": "normal",
         # We want to avoid normalizing the gripper
         "action_normalization_mask": [True, True, True, True, True, True, False],
         # standardize_fn is dynamically loaded from a file
-        # for example: "experiments/kevin/custom_standardization_transforms.py:aloha_dataset_transform"
         "standardize_fn": ModuleSpec.create(
-            "octo.data.oxe.oxe_standardization_transforms:bridge_dataset_transform",
+            "octo.data.oxe.oxe_standardization_transforms:simpler_dataset_transform",
         ),
         # If the default data loading speed is too slow, try these:
         # "num_parallel_reads": 8,  # for reading from disk / GCS

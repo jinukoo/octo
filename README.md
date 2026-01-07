@@ -39,6 +39,10 @@ For GPU:
 ```bash
 pip install --upgrade "jax[cuda11_pip]==0.4.20" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ```
+**Note:** If you encounter a cuDNN version mismatch error (`Found cuDNN version 0, but JAX was built against version 8600`), ensure the correct cuDNN version is installed:
+```bash
+pip install nvidia-cudnn-cu11==8.6.0.163
+```
 
 For TPU
 ```bash
