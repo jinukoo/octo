@@ -56,8 +56,9 @@ def simpler_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
     ]
 
     # Create dummy proprio since the dataset has no proprioceptive data
+    # Need at least 7 dims to match Bridge format and avoid visualization errors
     traj_len = tf.shape(trajectory["action"])[0]
-    trajectory["observation"]["proprio"] = tf.zeros((traj_len, 1), dtype=tf.float32)
+    trajectory["observation"]["proprio"] = tf.zeros((traj_len, 7), dtype=tf.float32)
 
     return trajectory
 
